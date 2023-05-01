@@ -21,7 +21,7 @@
 <body lang="en-US" dir="ltr">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/index.html">     Home</a>
+    <a class="navbar-brand" href="/index.php">     Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,30 +30,40 @@
         <li class="nav-item active">
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about.html">About Me</a>
+        <a class="nav-link" href="/about.php">About Me</a>
       </li>
     </div>
   </nav>
 <br>
-<div class="row"> 
-    <div class="column pad">
-
-    </div>
-    <div class="column center">
-        <h1>About me</h1>
-    </div>
-</div>
+<h1>About me</h1>
 <div class="row">
     <div class="column pad">
 
     </div>
     <div class="column center">
-        <p>Hey! I'm Joshua Morris, a fourth-year computer science student, hoping to graduate in May 2024. I have many projects I have worked on, so I put some on here for others to see.</p>
+        <p>Hey! I'm Joshua Morris, a fourth-year computer science student, hoping to graduate in May 2024. I have many projects I have worked on, so I put some on here for others to see. </p>
     </div>
     <div class="column pad">
 
     </div>
 </div>
-<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version 0.2</a></footer>
+
+<?php
+$host = "159.89.34.140";
+$username = "morris";
+$password = "Painfulanal1!";
+$dbname = "changes";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$vers = $conn->query("select Version from changes ORDER BY Date DESC LIMIT 1;");
+  $verstext = $vers->fetch_assoc()["Version"];
+?>
+
+<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version <?php echo $verstext;?></a></footer>
 </body>
 </html>

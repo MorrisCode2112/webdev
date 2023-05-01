@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style>
-
   
 
 </style>
@@ -20,7 +19,7 @@
 <body lang="en-US" dir="ltr">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/index.html">     Home</a>
+    <a class="navbar-brand" href="/index.php">     Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,7 +28,7 @@
         <li class="nav-item active">
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about.html">About Me</a>
+        <a class="nav-link" href="/about.php">About Me</a>
       </li>
     </div>
   </nav>
@@ -57,6 +56,22 @@
 <br>
 <br>
 
-<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version 0.2</a></footer>
+<?php
+$host = "159.89.34.140";
+$username = "morris";
+$password = "Painfulanal1!";
+$dbname = "changes";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$vers = $conn->query("select Version from changes ORDER BY Date DESC LIMIT 1;");
+  $verstext = $vers->fetch_assoc()["Version"];
+?>
+
+<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version <?php echo $verstext;?></a></footer>
 </body>
 </html>

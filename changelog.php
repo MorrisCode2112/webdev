@@ -17,14 +17,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT Version, Changes, Date FROM `changes` WHERE 1";
+$sql = "SELECT * FROM ( SELECT Version, Changes, Date FROM changes ORDER BY Date DESC) result ORDER BY `result`.`Date` DESC";
 $result = $conn->query($sql);
 ?>
 	
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">	<title>Welcome!</title>
+<link rel="manifest" href="/site.webmanifest">	<title>Changelog</title>
 
 
 
@@ -39,7 +39,7 @@ $result = $conn->query($sql);
 <body lang="en-US" dir="ltr">
 <div id="page container">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/index.html">     Home</a>
+    <a class="navbar-brand" href="/index.php">     Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -48,12 +48,15 @@ $result = $conn->query($sql);
         <li class="nav-item active">
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about.html">About Me</a>
+        <a class="nav-link" href="/about.php">About Me</a>
       </li>
     </div>
   </nav>
-<h3 style="font-size:20px">This changelog uses a MySQL query to populate the table below with results </h3>
+
 <br>
+
+<h3>This changelog uses a MySQL query to populate the table below with results. Version numbers are MAJOR.MINOR. I try to have a different version number for each GIT commit and push. Version 1.0 will probably be the first "Fully Functional" release.</h3>
+<p style="color: white;">OH LOOK, BUZZ WORDS!!</p>
 <br>
 <br>
 <hr>
@@ -99,10 +102,12 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-$conn->close();
+  $vers = $conn->query("select Version from changes ORDER BY Date DESC LIMIT 1;");
+  $verstext = $vers->fetch_assoc()["Version"];
 ?>
-
 </div>
-<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version 0.2</a></footer>
+
+<footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version <?php echo $verstext;?></a></footer>
 </body>
 </html>
+<?php $conn->close();?>
