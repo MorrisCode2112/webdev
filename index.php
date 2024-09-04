@@ -56,21 +56,7 @@
 <br>
 <br>
 
-<?php
-$host = "159.89.34.140";
-$username = "morris";
-$password = "Painfulanal1!";
-$dbname = "changes";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-$vers = $conn->query("select Version from changes ORDER BY Date DESC LIMIT 1;");
-  $verstext = $vers->fetch_assoc()["Version"];
-?>
 
 <footer>Copyright &copy;2023-<script>document.write(new Date().getFullYear())</script>, Joshua Morris <a href="/changelog.php">Version <?php echo $verstext;?></a></footer>
 </body>
